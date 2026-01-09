@@ -84,7 +84,7 @@ class Order(models.Model):
 
 
 class Payment(models.Model):
-    # order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
     payment_id = models.CharField(max_length=255, unique=True)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(

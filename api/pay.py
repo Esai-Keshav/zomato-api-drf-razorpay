@@ -6,7 +6,7 @@ import razorpay
 client = razorpay.Client(auth=(key_id, key_secret))
 
 
-def get_url(amount=200):
+def get_url(amount=200, order_id=1):
     res = client.payment_link.create(
         {
             "amount": amount * 100,
@@ -19,7 +19,7 @@ def get_url(amount=200):
             },
             "notify": {"sms": True, "email": True},
             "reminder_enable": True,
-            "notes": {"policy_name": "Cyces "},
+            "notes": {"order_id": order_id},
             "callback_url": "http://localhost:8000/api/payment/callback/",
             "callback_method": "get",
         }

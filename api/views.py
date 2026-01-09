@@ -100,12 +100,13 @@ class OrderAPI(ModelViewSet):
     @action(detail=True, methods=["get"])
     def pay(self, request, pk=None):
         order = self.get_object()
+        print(order)
 
         price = float(OrderSerializer(order).data["total_price"])
         # return Response({"ok": "ok"})
         print(price)
 
-        return Response(get_url(price))
+        return Response(get_url(price, order_id=order.id))
         # return get_url((OrderSerializer(order).data["total_price"]))
 
 
@@ -139,8 +140,12 @@ class PaymentAPI(ModelViewSet):
         pay_id = self.request.query_params.get("razorpay_payment_id")
         status = self.request.query_params.get("razorpay_payment_link_status")
         res = payment_status(pay_id)
-        print(res["created_at"])
+        # print(res["created_at"])
+        order_id = res["notes"]["order_id"]
+        order = Order.objects.get(id=order_id)
+
         Payment.objects.create(
+            order=order,
             payment_id=pay_id,
             amount=res["amount"],
             status=status,

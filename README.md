@@ -1,3 +1,3 @@
-# zomato-api-drf-razorpay-poc
+# zomato-api-drf-razorpay
 
-It is a POC for Zomato backend in DRF with Razorpay 
+Zomato backend in DRF with Razorpay
