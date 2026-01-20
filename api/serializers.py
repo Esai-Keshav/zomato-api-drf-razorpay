@@ -20,7 +20,7 @@ class HotelSerialer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    hotel = serializers.StringRelatedField()
+    # hotel = serializers.StringRelatedField()
 
     class Meta:
         model = User

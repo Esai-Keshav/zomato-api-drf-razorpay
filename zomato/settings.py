@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -57,14 +58,23 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "zomato.urls"
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_AUTHENTICATION_CLASSES": (
-#         "rest_framework_simplejwt.authentication.JWTAuthentication",
-#     ),
-#     "DEFAULT_PERMISSION_CLASSES": [
-#         "rest_framework.permissions.IsAuthenticated",
-#     ],
-# }
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    #     "DEFAULT_AUTHENTICATION_CLASSES": (
+    #         "rest_framework_simplejwt.authentication.JWTAuthentication",
+    #     ),
+    #     "DEFAULT_PERMISSION_CLASSES": [
+    #         "rest_framework.permissions.IsAuthenticated",
+    #     ],
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Zomato API",
+    "DESCRIPTION": "DRF Swagger ",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
+
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=6),

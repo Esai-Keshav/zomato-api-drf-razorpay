@@ -1,6 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsCustomer, IsHotelOwner
 from rest_framework.response import Response
