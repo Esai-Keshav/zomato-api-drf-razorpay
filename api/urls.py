@@ -8,6 +8,7 @@ from .views import (
     AddressAPI,
     PaymentAPI,
     CartItemAPI,
+    health,
 )
 from django.urls import path, include
 
@@ -21,8 +22,12 @@ router.register("agents", DeliveryAgentAPI, basename="Agent API")
 router.register("orders", OrderAPI, basename="Order API")
 router.register("address", AddressAPI, basename="Address API")
 router.register("payment", PaymentAPI, basename="Payment API")
+# router.register("health", health, basename="Health API")
 # router.register("cart", CartItemAPI, basename="Cart Item API")
 
-urlpatterns = [path("", include(router.urls))]
+urlpatterns = [
+    path("", include(router.urls)),
+    path("health/", health),
+]
 
 # print(router.urls)

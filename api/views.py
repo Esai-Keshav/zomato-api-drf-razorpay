@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
+from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from .permissions import IsCustomer, IsHotelOwner
 from rest_framework.response import Response
@@ -28,6 +29,12 @@ from .models import (
 )
 from .pay import get_url, payment_status
 from datetime import datetime
+
+
+@api_view(["GET"])
+def health(request):
+    # print(request.body)
+    return Response({"status": "API is working"})
 
 
 class HotelAPI(ModelViewSet):
