@@ -15,4 +15,4 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "zomato.settings")
 
 application = get_wsgi_application()
 
-# gunicorn zomato.wsgi
+# gunicorn zomato.wsgi:application -b 0.0.0.0:8000

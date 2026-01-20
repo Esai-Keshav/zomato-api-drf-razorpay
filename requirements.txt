@@ -2,3 +2,4 @@ django
 djangorestframework
 drf-spectacular
 razorpay
+django-cors-headers
