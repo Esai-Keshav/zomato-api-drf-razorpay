@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure-q9xf5=1@jsz!3=j@#os!efgd&-8skcwx5!2zf!qsz^$@_o*(6e
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-CORS_ALLOWED_ORIGINS = ["*"]
+# CORS_ALLOWED_ORIGINS = ["*"]
 
 
 # Application definition
@@ -61,9 +61,9 @@ ROOT_URLCONF = "zomato.urls"
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    #     "DEFAULT_AUTHENTICATION_CLASSES": (
-    #         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    #     ),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
     #     "DEFAULT_PERMISSION_CLASSES": [
     #         "rest_framework.permissions.IsAuthenticated",
     #     ],

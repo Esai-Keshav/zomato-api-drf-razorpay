@@ -99,11 +99,11 @@ class OrderAPI(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
 
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
-    # def get_queryset(self):
-    #     print(self.request.user, "= user")
-    #     return Order.objects.filter(user=self.request.user)
+    def get_queryset(self):
+        print(self.request.user, "= user")
+        return Order.objects.filter(user=self.request.user)
 
     @action(detail=True, methods=["get"])
     def pay(self, request, pk=None):
