@@ -28,7 +28,10 @@ SECRET_KEY = "django-insecure-q9xf5=1@jsz!3=j@#os!efgd&-8skcwx5!2zf!qsz^$@_o*(6e
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-# CORS_ALLOWED_ORIGINS = ["*"]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://render-test-gspe.onrender.com/",
+]
 
 
 # Application definition
