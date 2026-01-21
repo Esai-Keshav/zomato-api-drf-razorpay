@@ -131,11 +131,16 @@ class ReviewAPI(ModelViewSet):
 class AddressAPI(ModelViewSet):
     # queryset = Address.objects.all()
     serializer_class = AddressSerializer
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         # print(self.request.query_params.get("id"))
         # print(Address.objects.filter(user=self.request.user))
         return Address.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        print(self.request.user, "<<")
+        serializer.save(user=self.request.user)
 
 
 class PaymentAPI(ModelViewSet):
