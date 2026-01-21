@@ -30,7 +30,7 @@ DEBUG = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
-ALLOWED_HOSTS = ["render-test-gspe.onrender.com", "127.0.0.1"]
+ALLOWED_HOSTS = ["render-test-gspe.onrender.com", "127.0.0.1", "localhost"]
 
 
 CSRF_TRUSTED_ORIGINS = [
@@ -69,9 +69,9 @@ ROOT_URLCONF = "zomato.urls"
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
+    # "DEFAULT_AUTHENTICATION_CLASSES": (
+    #     "rest_framework_simplejwt.authentication.JWTAuthentication",
+    # ),
     #     "DEFAULT_PERMISSION_CLASSES": [
     #         "rest_framework.permissions.IsAuthenticated",
     #     ],

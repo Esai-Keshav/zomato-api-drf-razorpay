@@ -105,6 +105,9 @@ class OrderAPI(ModelViewSet):
         print(self.request.user, "= user")
         return Order.objects.filter(user=self.request.user)
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
     @action(detail=True, methods=["get"])
     def pay(self, request, pk=None):
         order = self.get_object()

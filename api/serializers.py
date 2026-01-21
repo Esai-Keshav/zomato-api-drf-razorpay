@@ -45,12 +45,13 @@ class DeliveryAgentSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
-    hotel = serializers.StringRelatedField()
+    hotel = hotel = serializers.PrimaryKeyRelatedField(queryset=Hotel.objects.all())
     delivery_agent = serializers.StringRelatedField()
 
     class Meta:
         model = Order
         fields = "__all__"
+        read_only_fields = ["user"]
 
 
 class ReviewSerializer(serializers.ModelSerializer):
