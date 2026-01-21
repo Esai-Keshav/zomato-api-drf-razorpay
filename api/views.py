@@ -15,6 +15,7 @@ from .serializers import (
     AddressSerializer,
     PaymentSerializer,
     CartItemSerializer,
+    CartSerializer,
 )
 
 from .models import (
@@ -27,6 +28,7 @@ from .models import (
     Address,
     Payment,
     CartItem,
+    Cart,
 )
 from .pay import get_url, payment_status
 from datetime import datetime
@@ -170,4 +172,16 @@ class PaymentAPI(ModelViewSet):
 
 class CartItemAPI(ModelViewSet):
     serializer_class = CartItemSerializer
-    queryset = CartItem.objects.all()
+    # queryset = CartItem.objects.all()
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return CartItem.objects.filter(cart__user=self.request.user)
+
+
+class CartAPI(ModelViewSet):
+    serializer_class = CartSerializer
+    queryset = Cart.objects.all()
+
+    # def get_queryset(self):
+    #     return CartItem.objects.filter(user=self.request.user)

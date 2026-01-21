@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.models import User
 from .models import (
     Hotel,
     User,
@@ -24,7 +25,16 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "username", "address", "phone_number", "email"]
+        fields = ["id", "username", "address", "phone_number", "email", "password"]
+        extra_kwargs = {"password": {"write_only": True}}
+
+    def create(self, validated_data):
+        password = validated_data.pop("password")
+        user = User(**validated_data)
+        user.set_password(password)  # 🔐 hashing happens here
+        user.save()
+        Cart.objects.create(user=user)
+        return user
 
 
 class FoodSerializer(serializers.ModelSerializer):
@@ -45,7 +55,7 @@ class DeliveryAgentSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
-    hotel = hotel = serializers.PrimaryKeyRelatedField(queryset=Hotel.objects.all())
+    # hotel = hotel = serializers.PrimaryKeyRelatedField(queryset=Hotel.objects.all())
     delivery_agent = serializers.StringRelatedField()
 
     class Meta:
@@ -90,6 +100,7 @@ class CartSerializer(serializers.ModelSerializer):
 class CartItemSerializer(serializers.ModelSerializer):
     cart = serializers.StringRelatedField()
     food = serializers.StringRelatedField()
+    food_image = serializers.SerializerMethodField()
     total_price = serializers.SerializerMethodField()
 
     class Meta:
@@ -98,3 +109,6 @@ class CartItemSerializer(serializers.ModelSerializer):
 
     def get_total_price(self, obj):
         return obj.food.price * obj.quantity
+
+    def get_food_image(self, obj):
+        return obj.food.image

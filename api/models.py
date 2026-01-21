@@ -67,7 +67,6 @@ class PaymentStatus(models.TextChoices):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
     delivery_agent = models.ForeignKey(
         DeliveryAgent, null=True, blank=True, on_delete=models.SET_NULL
     )
@@ -112,7 +111,7 @@ class Review(models.Model):
 
 
 class Cart(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
