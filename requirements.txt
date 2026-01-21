@@ -5,3 +5,4 @@ razorpay
 django-cors-headers
 djangorestframework-simplejwt
 gunicorn
+whitenoise
