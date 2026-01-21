@@ -50,6 +50,23 @@ class DeliveryAgent(models.Model):
         return self.name
 
 
+class Address(models.Model):
+    user = models.ForeignKey(User, related_name="addresses", on_delete=models.CASCADE)
+    label = models.CharField(max_length=50)  # Home / Office
+    address_line = models.TextField()
+    city = models.CharField(max_length=100)
+    latitude = models.DecimalField(
+        max_digits=9, decimal_places=6, null=True, blank=True
+    )
+    longitude = models.DecimalField(
+        max_digits=9, decimal_places=6, null=True, blank=True
+    )
+    is_default = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user} | {self.city}"
+
+
 class OrderStatus(models.TextChoices):
     ORDERED = "ordered", "Ordered"
     PREPARING = "preparing", "Preparing"
@@ -69,6 +86,12 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     delivery_agent = models.ForeignKey(
         DeliveryAgent, null=True, blank=True, on_delete=models.SET_NULL
+    )
+    address = models.ForeignKey(
+        Address,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
     )
 
     status = models.CharField(
@@ -137,23 +160,6 @@ class CartItem(models.Model):
 
 #     class Meta:
 #         unique_together = ("user", "hotel", "food")
-
-
-class Address(models.Model):
-    user = models.ForeignKey(User, related_name="addresses", on_delete=models.CASCADE)
-    label = models.CharField(max_length=50)  # Home / Office
-    address_line = models.TextField()
-    city = models.CharField(max_length=100)
-    latitude = models.DecimalField(
-        max_digits=9, decimal_places=6, null=True, blank=True
-    )
-    longitude = models.DecimalField(
-        max_digits=9, decimal_places=6, null=True, blank=True
-    )
-    is_default = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f"{self.user} | {self.city}"
 
 
 # class MembershipPlan(models.Model):
