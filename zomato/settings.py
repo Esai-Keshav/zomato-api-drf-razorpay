@@ -27,7 +27,11 @@ SECRET_KEY = "django-insecure-q9xf5=1@jsz!3=j@#os!efgd&-8skcwx5!2zf!qsz^$@_o*(6e
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+ALLOWED_HOSTS = ["render-test-gspe.onrender.com", "127.0.0.1"]
+
 
 CSRF_TRUSTED_ORIGINS = [
     "https://render-test-gspe.onrender.com/",
@@ -53,6 +57,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -149,6 +154,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

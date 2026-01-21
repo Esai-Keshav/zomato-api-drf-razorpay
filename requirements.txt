@@ -4,3 +4,4 @@ drf-spectacular
 razorpay
 django-cors-headers
 djangorestframework-simplejwt
+gunicorn
