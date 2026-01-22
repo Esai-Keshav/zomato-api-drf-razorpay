@@ -32,6 +32,7 @@ from .models import (
 )
 from .pay import get_url, payment_status
 from datetime import datetime
+from rest_framework.filters import SearchFilter
 
 
 @api_view(["GET"])
@@ -43,6 +44,12 @@ def health(request):
 class HotelAPI(ModelViewSet):
     queryset = Hotel.objects.all()
     serializer_class = HotelSerialer
+    filter_backends = [SearchFilter]
+
+    search_fields = [
+        "name",
+        "city",
+    ]
 
     @action(detail=True, methods=["get"])
     def foods(self, request, pk=None):
@@ -70,6 +77,12 @@ class FoodAPI(ModelViewSet):
     queryset = Food.objects.all()
     serializer_class = FoodSerializer
     # permission_classes = [IsAuthenticated & (IsCustomer | IsHotelOwner)]
+    filter_backends = [SearchFilter]
+
+    search_fields = [
+        "name",
+        "food_type",
+    ]
 
     @action(detail=True, methods=["get"])
     def reviews(self, request, pk=None):
