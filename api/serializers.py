@@ -54,7 +54,7 @@ class DeliveryAgentSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    user = UserSerializer
+    user = serializers.StringRelatedField()  # UserSerializer
     # hotel = hotel = serializers.PrimaryKeyRelatedField(queryset=Hotel.objects.all())
     delivery_agent = serializers.StringRelatedField()
 
