@@ -181,6 +181,7 @@ class CartItemAPI(ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        # print("ok")
         return CartItem.objects.filter(cart__user=self.request.user)
 
 

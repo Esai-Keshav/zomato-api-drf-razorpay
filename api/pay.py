@@ -20,7 +20,8 @@ def get_url(amount=200, order_id=1):
             "notify": {"sms": True, "email": True},
             "reminder_enable": True,
             "notes": {"order_id": order_id},
-            "callback_url": "http://localhost:8000/api/payment/callback/",
+            # "callback_url": "http://localhost:8000/api/payment/callback/",
+            "callback_url": "http://localhost:5173/orders/",
             "callback_method": "get",
         }
     )

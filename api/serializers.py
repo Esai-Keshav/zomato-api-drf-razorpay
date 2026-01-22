@@ -97,18 +97,68 @@ class CartSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+# class CartItemSerializer(serializers.ModelSerializer):
+#     cart = serializers.StringRelatedField()
+#     food = serializers.StringRelatedField()
+#     # food_image = serializers.SerializerMethodField()
+#     total_price = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = CartItem
+#         fields = ["food", "quantity", "cart"]
+#         # read_only_fields = ["food_image"]
+
+#     def get_total_price(self, obj):
+#         return obj.food.price * obj.quantity
+
+#     def get_food_image(self, obj):
+#         return obj.food.image
+
+
 class CartItemSerializer(serializers.ModelSerializer):
-    cart = serializers.StringRelatedField()
-    food = serializers.StringRelatedField()
-    food_image = serializers.SerializerMethodField()
+    # WRITE: accept food ID
+    food = serializers.PrimaryKeyRelatedField(
+        queryset=Food.objects.all(), write_only=True
+    )
+
+    # READ: derived fields
+    food_name = serializers.CharField(source="food.name", read_only=True)
+    food_image = serializers.URLField(source="food.image", read_only=True)
+    food_price = serializers.DecimalField(
+        source="food.price", max_digits=8, decimal_places=2, read_only=True
+    )
+
     total_price = serializers.SerializerMethodField()
 
     class Meta:
         model = CartItem
-        fields = "__all__"
+        fields = [
+            "id",
+            "food",  # for POST
+            "food_name",  # for GET
+            "food_image",
+            "food_price",
+            "quantity",
+            "total_price",
+        ]
 
     def get_total_price(self, obj):
         return obj.food.price * obj.quantity
 
-    def get_food_image(self, obj):
-        return obj.food.image
+    def create(self, validated_data):
+        request = self.context["request"]
+        user = request.user
+
+        cart, _ = Cart.objects.get_or_create(user=user)
+
+        cart_item, created = CartItem.objects.get_or_create(
+            cart=cart,
+            food=validated_data["food"],
+            defaults={"quantity": validated_data["quantity"]},
+        )
+
+        if not created:
+            cart_item.quantity += validated_data["quantity"]
+            cart_item.save()
+
+        return cart_item
