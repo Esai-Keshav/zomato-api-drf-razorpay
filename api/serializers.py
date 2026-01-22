@@ -38,7 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class FoodSerializer(serializers.ModelSerializer):
-    hotel = serializers.StringRelatedField()
+    hotel = serializers.StringRelatedField()  # HotelSerialer()
 
     class Meta:
         model = Food
@@ -54,7 +54,7 @@ class DeliveryAgentSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField()
+    user = UserSerializer
     # hotel = hotel = serializers.PrimaryKeyRelatedField(queryset=Hotel.objects.all())
     delivery_agent = serializers.StringRelatedField()
 
