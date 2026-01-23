@@ -29,8 +29,15 @@ DEBUG = True
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+CORS_ALLOW_ALL_ORIGINS = True
 
-ALLOWED_HOSTS = ["render-test-gspe.onrender.com", "127.0.0.1", "localhost"]
+# ALLOWED_HOSTS = [
+#     "render-test-gspe.onrender.com",
+#     "127.0.0.1",
+#     "localhost",
+#     "myzomatocloneapp.netlify.app",
+# ]
+ALLOWED_HOSTS = ["*"]
 
 
 CSRF_TRUSTED_ORIGINS = [
